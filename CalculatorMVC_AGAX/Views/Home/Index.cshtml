@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-12">Calculator</h1>
+</div>
+   <fieldset>
+        <div>
+            <div>
+                <lable>Enter First number</lable>
+                <input type="number" id="num1" />
+            </div>
+            <br />
+            <div>
+                <lable>Enter second number</lable>
+                <input type="number" id="num2" />
+            </div>
+            <br />
+            <input class="text-center" type="button" value="Submit" id="buttonSubmit" />
+            <br />
+            <div>
+                <div id="add"></div>
+                <div id="sub"></div>
+                <div id="mul"></div>
+                <div id="div"></div>
+
+            </div>
+        </div>
+        <br />
+        <span id="result"></span>
+  </fieldset>
+    
+
+
+    <div>
+        @*<label for="myfile" id="Calculate">Click the Button for CurentDateTime :</label>
+            <input type="submit" name="date" id="date">
+            <span id="CurrentDateTime"></span>*@
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#buttonSubmit').click(function () {
+            val1 = $('#num1').val();
+            val2 = $('#num2').val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Calculate")",
+                data: { number1: val1, number2: val2 },
+                dataType: "json",
+                success: function (msg) {
+                    console.log(msg);
+                    $('#add').html("additon" +" : " + msg.add);
+                    $('#sub').html("substraction" + " : " + msg.substract);
+                    $('#mul').html("mulitplication" + " : " + msg.multiply);
+                    $('#div').html("division" + " : " + msg.divide);
+                    console.log(msg.add);
+                    console.log(msg.substract);
+                    console.log(msg.multiply);
+                    console.log(msg.divide);
+                },
+                error: function (req, status, error) {
+                    alert(error);
+                }
+            });
+        });
+    });
+    @*$(document).ready(function){
+        $('#Data').keyup(function (event) {
+            var data = $('Data').val();
+            $('info').html(data);
+        });
+        $('#Data').click(function () {
+            $.ajax({
+                url: "@Url.Action("CurrentDateTime")",
+                method:"GET",
+                success: function (a) {
+                    $('CurrentDateTime').html(a);
+                },
+                error: function (a) {
+                    alert(a);
+                }
+            })
+        })
+    }*@
+    </script>
